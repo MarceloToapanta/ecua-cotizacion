@@ -1,0 +1,73 @@
+<%- class_content = quotation.approved ? "content-block approved" : "content-block pending" %>
+<div class="<%= class_content%>">
+  <div class="row">
+    <div class="small-8 medium-9 large-9 columns ">
+      <strong>
+        <%= quotation.company.user.name%>  
+      </strong>
+    </div>
+    <div class="small-4 medium-3 large-3 columns text-right color-grey">
+      <%= time_ago_in_words(quotation.created_at)%>
+    </div>
+    <div class="medium-12 large-12 columns ">
+      <%= link_to quotation.description, company_quotation_path(quotation.company.id,quotation), :class => "description" %> 
+    </div>
+  </div>
+
+  <div class="row info">
+    <div class="medium-6 large-6 columns">
+      
+      <div class="row">
+        <div class="medium-6 large-6 columns"><strong>Vigencia: </strong></div>
+        <div class="medium-6 large-6 columns"><%= quotation.created_at.strftime(@date_format)%></div>
+      </div> 
+
+      <div class="row">
+        <div class="medium-6 large-6 columns"><strong>Empresa: </strong></div>
+        <div class="medium-6 large-6 columns"><%= quotation.company.name %></div>
+      </div>
+    </div>
+
+    <div class="medium-6 large-6 columns">
+      
+      <div class="row">
+        <div class="medium-6 large-6 columns"><strong>Valor: </strong></div>
+        <div class="medium-6 large-6 columns"><%= "$" + number_with_precision(quotation.total, :precision => 2) || 0  %></div>
+      </div> 
+
+      <div class="row">
+        <div class="medium-6 large-6 columns"><strong>Nro. Examenes: </strong></div>
+        <div class="medium-6 large-6 columns">2</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row info">
+    <div class="medium-6 large-6 columns">
+      
+    </div>
+
+    <div class="medium-6 large-6 columns">
+      
+      <div class="row">
+        <% if current_user.rol == 3 %>
+          <div class="small-6 medium-6 large-6 columns"><%= link_to 'Editar', edit_company_quotation_path(quotation.company.id,quotation), :class => " tiny button" %></div>
+          <div class="small-6 medium-6 large-6 columns"><%= link_to 'Eliminar', "/companies/" + quotation.company.id.to_s + "/quotations/" + quotation.id.to_s , method: :delete, data: { confirm: 'Esta seguro de eliminar el registro?' }, :class => "destroy tiny button"  %></div>
+        <% elsif current_user.rol == 2 %>
+          <div class="small-6 medium-6 large-6 columns"></div>
+          <div class="small-6 medium-6 large-6 columns"><%= link_to 'Editar', edit_company_quotation_path(quotation.company.id,quotation), :class => " tiny button" %></div>
+        <% else %>
+          <div class="small-6 medium-6 large-6 columns"></div>
+          <div class="small-6 medium-6 large-6 columns"><%= link_to 'Ver', company_quotation_path(quotation.company.id,quotation), :class => " tiny button" %></div>
+        <% end %>
+        
+      </div> 
+
+    </div>
+  </div>
+
+
+
+  
+
+</div>

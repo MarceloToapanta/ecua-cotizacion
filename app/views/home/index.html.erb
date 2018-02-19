@@ -1,0 +1,204 @@
+<%- content_for :title, 'Panel de cotizaciones' %>
+<!-- <div class="second-title">
+  <h4>Empresas Registradas</h4>
+</div> -->
+<div class="box">
+  <div class="row">
+    <div class="medium-12 large-12 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3><%= "Estadísticas " %> </h3>
+        </div>
+        <div class="content-block">
+          <div class="row ">
+            <div class="medium-4 large-4 columns">
+              <div class="gray-text-color text-center">
+                Cotizaciones aprobadas
+              </div>          
+              <canvas id="AppChart" width="200" height="200" bg-color="rgba(108, 188, 49, 0.8)" br-color="#6CBC31">
+                <% @app_months.each do |month| %>
+                  <div class="param" data="<%= month[1] %>"><%= month[0] %></div>
+                <%- end %>
+              </canvas>
+
+            </div>
+
+            <div class="medium-4 large-4 columns">
+              <div class="gray-text-color text-center">
+                Cotizaciones pendientes
+
+                <canvas id="PenChart" width="200" height="200" bg-color="rgba(238, 117, 99, 0.8)" br-color="#EE7563">
+                  <% @pen_months.each do |month| %>
+                    <div class="param" data="<%= month[1] %>"><%= month[0] %></div>
+                  <%- end %>
+                </canvas>
+              </div>
+            </div>
+            <div class="medium-4 large-4 columns">
+              <div class="gray-text-color text-center">
+                Cotizaciones rechazadas
+                <canvas id="RecChart" width="200" height="200" bg-color="rgba(228, 234, 243, 0.8)" br-color="#E4EAF3">
+                  <% @rec_months.each do |month| %>
+                    <div class="param" data="<%= month[1] %>"><%= month[0] %></div>
+                  <%- end %>
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="row">
+    <div class="medium-12 large-6 columns">
+      <% if current_user.rol == 3 %>
+        <div class="block pending">
+          <div class="title-block">
+            <% if @admin_pen_quotations.count > 10 %>
+              <h3><%= "Cotizaciones pendientes (10/#{@admin_pen_quotations.count}) " %> </h3>
+            <% else %>
+              <h3><%= "Cotizaciones pendientes (#{@admin_pen_quotations.count}) " %> </h3>
+            <% end %>
+
+          </div>
+          <%- if @admin_pen_quotations.any? %>
+            <% @admin_pen_quotations.take(10).each do |quotation| %>
+              <%= render 'quotation_row', quotation: quotation%>
+            <% end %>
+          <%- else %>
+            <div class="content-block">
+              <div class="row">
+                <div class="medium-12 large-12 columns">
+                  No se encontraron resultados
+                </div>
+              </div>
+            </div>
+          <%- end %>
+        </div>
+      <% else %>  
+        <div class="block pending">
+          <div class="title-block">
+
+            <% if @pen_quotations.count > 10 %>
+              <h3><%= "Cotizaciones pendientes (10/#{@pen_quotations.count}) " %> </h3>
+            <% else %>
+              <h3><%= "Cotizaciones pendientes (#{@pen_quotations.count}) " %> </h3>
+            <% end %>
+
+          </div>
+          <%- if @pen_quotations.any? %>
+            <% @pen_quotations.take(10).each do |quotation| %>
+              <%= render 'quotation_row', quotation: quotation%>
+            <% end %>
+          <%- else %>
+            <div class="content-block">
+              <div class="row">
+                <div class="medium-12 large-12 columns">
+                  No se encontraron resultados
+                </div>
+              </div>
+            </div>
+          <%- end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="medium-12 large-6 columns">
+      <div class="block table">
+        <div class="title-block">
+          <h3>Últimas empresas (<a href="<%= companies_path %>"> Todas </a>)</h3>
+          <div class="right-section">
+            <a href=<%= new_company_path %> class="small success button">Nueva empresa</a>      
+          </div>
+        </div>
+        <div class="content-block">
+          <% if @companies.any? %>
+            <table class="responsive">
+              <thead>
+                <tr>
+                  <th style="width: 30%">Nombre</th>
+                  <!-- <th style="width: 20%">Ruc</th> -->
+                  <th style="width: 10%">Sector</th>
+                  <th style="width: 30%">Nombre contacto</th>
+                  <th style="width: 30%">Cotizaciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @companies.each do |company| %>
+                  <tr>
+                    <td><%= link_to company.name, company  %></td>
+                    <!-- <td><%= company.ruc %></td> -->
+                    <td><%= company.sector_fullname %></td>
+                    <td><%= company.contact_name %></td>
+                    <td>
+                      <%= link_to 'Nueva', new_company_quotation_path(company.id), :class => company.enabled_for_new_quotation? ? "tiny button" : "tiny button disabled" %>
+                      <%= link_to 'Histórico', company_quotations_path(company.id), :class => "tiny button" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %> 
+            <div class="row" style="margin:20px">
+              <div class="medium-12 large-12 columns">
+                No se encontraron resultados
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+  function load_chart(id){
+    var ctx = $(id);
+    var datalabels = [];
+    var data = [];
+    ctx.children(".param").each(function(i, e){
+      datalabels.push($(this).text());
+      data.push($(this).attr('data'));
+    });
+    backgroundColor = ctx.attr('bg-color')
+    borderColor = ctx.attr('br-color')
+    
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: datalabels,
+          datasets: [{
+            label: '# de Cotizaciones',
+            data: data,
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true,
+                stepSize: 1
+              }
+            }]
+          }
+        }
+    });
+  }
+  load_chart("#AppChart");
+  load_chart("#PenChart");
+  load_chart("#RecChart");
+</script>
+
+
+
+
+

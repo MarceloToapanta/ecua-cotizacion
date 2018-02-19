@@ -1,0 +1,11 @@
+I"Ñ(function() {
+  $('.q-item-select').change(function() {
+    var id, parent;
+    console.log($(this));
+    id = this.value;
+    parent = $(this).parent();
+    get_exam_values(id, parent);
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,21 @@
+email,name,encrypted_password,rol
+admin@cotizacion.com,Gonzalo Molina,admin,3
+marcelo.toapanta@hotmail.com,Marcelo Toapanta,marcelo.toapanta@hotmail.com,2
+macevedo@cotizacion.com,Acevedo María,macevedo@cotizacion.com,1
+paguilar@cotizacion.com,Aguilar Fredy,paguilar@cotizacion.com,1
+abarrera@cotizacion.com,Barrera Alfredo,abarrera@cotizacion.com,1
+lcardoso@cotizacion.com,Cardoso Laura,lcardoso@cotizacion.com,1
+gcasas@cotizacion.com,Casas Gabriel,gcasas@cotizacion.com,1
+lcruz@cotizacion.com,Cruz Luis,lcruz@cotizacion.com,1
+fescobar@cotizacion.com,Escobar Francisco,fescobar@cotizacion.com,1
+gmartin@cotizacion.com,Gamboa Martín,gmartin@cotizacion.com,1
+jgarcia@cotizacion.com,García José,jgarcia@cotizacion.com,1
+vmena@cotizacion.com,Mena Veronica,vmena@cotizacion.com,1
+alopez@cotizacion.com,Lopez Adriana,alopez@cotizacion.com,1
+jpadilla@cotizacion.com,Padilla Javier,jpadilla@cotizacion.com,1
+pperez@cotizacion.com,Perez Pedro,pperez@cotizacion.com,1
+sramirez@cotizacion.com,Ramirez Sebastian,sramirez@cotizacion.com,1
+rromero@cotizacion.com,Romero Rosa,rromero@cotizacion.com,1
+vsuarez@cotizacion.com,Suarez Veronica,vsuarez@cotizacion.com,1
+mtorres@cotizacion.com,Torres Marco,mtorres@cotizacion.com,1
+gzapata@cotizacion.com,Zapata Gabriela,gzapata@cotizacion.com,1

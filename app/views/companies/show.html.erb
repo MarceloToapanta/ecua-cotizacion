@@ -1,0 +1,88 @@
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block">
+      <div class="title-block">
+        <h3>Información de Empresa</h3>
+      </div>
+      
+      <div class="content-block">
+        
+        <h4>Información de empresa</h4>
+        <hr/>
+        <p>
+          <strong>Nombre:</strong>
+          <%= @company.name %>
+        </p>
+
+        <p>
+          <strong>Ruc:</strong>
+          <%= @company.ruc %>
+        </p>
+
+        <p>
+          <strong>Dirección:</strong>
+          <%= @company.direcction %>
+        </p>
+
+        <p>
+          <strong>Descripción:</strong>
+          <%= @company.description %>
+        </p>
+
+        <p>
+          <strong>Sector:</strong>
+          <%= @company.sector %>
+        </p>
+
+        <h4>Información de contacto</h4>
+        <hr/>
+
+        <p>
+          <strong>Nombre contacto:</strong>
+          <%= @company.contact_name %>
+        </p>
+
+        <p>
+          <strong>Email contacto:</strong>
+          <%= @company.contact_email %>
+        </p>
+
+        <p>
+          <strong>Nombre doctor:</strong>
+          <%= @company.doctor_name %>
+        </p>
+
+        <p>
+          <strong>Email doctor:</strong>
+          <%= @company.doctor_email %>
+        </p>
+
+        <p>
+          <strong>Nombre responsable de facturación:</strong>
+          <%= @company.billing_name %>
+        </p>
+
+        <p>
+          <strong>Email responsable de facturación:</strong>
+          <%= @company.billing_email %>
+        </p>
+
+        <%- unless current_user.rol == 1 %>
+          <hr/>
+          <p>
+            <strong>Creado por:</strong>
+            <%= @company.user.name %>
+          </p>
+        <% end%>
+
+        <div class="button-actions">
+          <%= link_to 'Editar', edit_company_path(@company), :class => "from-button success button" %> 
+          <%= link_to 'Nueva cotización', new_company_quotation_path(@company), :class => @company.enabled_for_new_quotation? ? "from-button success button"  : "from-button success button disabled" %>
+          <%= link_to 'Lista de empresas', companies_path, :class => "from-button button" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

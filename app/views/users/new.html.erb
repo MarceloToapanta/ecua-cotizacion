@@ -1,0 +1,69 @@
+<%- content_for :title, 'Registrar vendedor' %>
+  
+          
+<%= form_for(@user, :method => 'post', :url => "/users/create_seller") do |f| %>
+  <fieldset class="row">
+    <% if @user.errors.any? %>
+      <div class="medium-12 large-12 columns">
+        <div id="error_explanation">
+          <div class="block">
+            <div class="title-block error">
+              <h3><%= "Atención!" %> </h2>
+            </div>
+            <div class="content-block">
+              <ul class="list-error">
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="medium-12 large-12 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Registrar vendedor</h3>
+        </div>
+        <div class="content-block">
+
+        <div class="medium-12 large-12 columns">
+          <div class="account-wall">
+
+            <div class="field">
+              <%= f.label :name, "Nombre", :class => "required" %><br />
+              <%= f.text_field :name, autofocus: true %>
+            </div>
+
+            <div class="field">
+              <%= f.label :email, :class => "required" %><br />
+              <%= f.email_field :email, autofocus: true %>
+            </div>
+
+            <div class="field">
+              <%= f.label :password, "Clave", :class => "required" %>
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :password_confirmation, "Confimar clave", :class => "required" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Registrar", :class => "from-button success button", data: { disable_with: "Por favor espera..." } %>
+            </div>
+          </div>
+        </div>      
+        </div>
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+
+

@@ -1,0 +1,44 @@
+<div class="q-item nested-fields well">
+  <%- select_opts = options_from_collection_for_select(@all_exams, 'id', 'name') %>
+
+
+  
+  <%= f.collection_select(:exam_id, @all_exams, :id, :name, { :prompt => 'Selecione un examen'}, :class => "q-item-select" ) %>
+
+<div class="row">
+	<div class="large-6 columns">
+	  <div class="row">
+	    <div class="large-8 columns">
+	      <%= f.label :city_unit, "VU. por ciudad " %>
+	    </div>
+	    <div class="large-4 columns">
+	      <%= f.text_field :city_unit, :class => 'city', :value => number_with_precision(f.object.city_unit,:precision => 2) || 0 %>
+	    </div>
+	  </div>
+
+	  <div class="row">
+	    <div class="large-8 columns">
+	      <%= f.label :province_unit, "VU. por provicia " %>
+	    </div>
+	    <div class="large-4 columns">
+	      <%= f.text_field :province_unit, :class => 'province', :value => number_with_precision(f.object.province_unit,:precision => 2) || 0 %>
+	    </div>
+	  </div>
+
+
+	  <div class="row">
+	    <div class="large-8 columns">
+	      <%= f.label :m_units_unit, "VU. por unidades móviles " %>
+	    </div>
+	    <div class="large-4 columns">
+	      <%= f.text_field :m_units_unit , :class => 'mobile' , :value => number_with_precision(f.object.m_units_unit,:precision => 2) || 0%>
+	    </div>
+	  </div>
+	</div>
+	<div class="large-6 columns">
+	</div>
+</div>
+
+  <%= f.hidden_field :quotation_id, :value => @quotation.id %>
+  <%= link_to_remove_association "Quitar examen", f %>
+</div>

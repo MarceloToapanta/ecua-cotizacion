@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Administración de cotizaciones" %></title>
+    <%= favicon_link_tag %>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+
+    
+  </head>
+
+  <body>
+		<div class="top-bar">
+			<div class="top-container row">
+				<div class="medium-12 large-12 columns">
+				  <div class="top-bar-title">
+				    
+				    <strong><a href="<%= root_path  %>">Administración de cotizaciones</a></strong>
+				  </div>
+			    <div class="top-bar-left">
+			      
+			    </div>
+			    <div class="top-bar-right">
+			      <ul class="dropdown menu" data-dropdown-menu>
+			        <li>
+			        	<% if user_signed_in? %>
+				        	<!-- <a href="#"><%= current_user.name %></a> -->
+				          <% if user_signed_in? && current_user.rol == 3 %>
+				          	<li><a class="pjax" href="/users/new/">Nuevo vendedor</a></li>
+				          	<li><a class="pjax" href="/home/reset_data/">Cargar datos</a></li>
+				           	<li><a class="pjax" href="/admin/">Administar contenido</a></li>
+				          <% end%>
+				          	<li>
+				          		<%= link_to "Editar perfil: #{current_user.name}", edit_user_registration_path(current_user.id) %>
+				          	</li>
+
+				          	<li>
+				          		<%= link_to "Cerrar sesión", destroy_user_session_path , :method => 'delete' %>
+				          	</li>
+				          
+				        <% else%>
+				          	<!-- <li>
+				          		<%= link_to "Cerrar sesión", destroy_user_session_path , :method => 'delete' %>
+				          	</li> -->
+									<!-- 	<%=  link_to "Login", new_user_session_path %> -->
+								<% end%>
+			        </li>
+			        
+			      </ul>
+			    </div>
+			  </div>
+		  </div>
+		</div>
+		<% if user_signed_in? %>
+			<div class="navbar navbar-inverse" id="nav" >
+				<div class="row">
+					<div class="medium-12 large-12 columns">
+						<div class="navbar-inner">
+							<ul class="nav">
+								<li class="active">
+									<%= link_to "Panel digital", root_path, :class => params[:controller] == "home" ? "dashboard active": "dashboard" %>
+								</li>
+								<li>
+									<%= link_to "Empresas", companies_path, :class => params[:controller] == "companies" ? "company active" : "company" %>
+								</li>
+								<li>
+									<%= link_to "Cotizaciones", current_user.rol == 1 ? quotations_path : quotations_path(:user => 'all'), :class => params[:controller] == "quotations" ? "quotation active" : "quotation" %>
+								</li>
+								<% if current_user.rol == 3 %>
+									<li>
+										<%= link_to "Exámenes", exams_path, :class => params[:controller] == "exams" ? "exam active" : "exam" %>
+									</li>
+								<% end %>
+							</ul>
+							<form action="<%= search_quotations_path %>" method="post" class="navbar-search pull-right">
+								<input type="text" name="q" class="search-query typeahead" placeholder="Buscar cotizaciones">
+							</form>
+							<div class="clear"></div>
+						</div>
+						<div class="main-title">
+						  <h1><%= content_for?(:title) ? yield(:title) : "Administración de cotizaciones" %></h1>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		<% end %>
+
+		<div id="main_content" class="container">
+			<div class="row">
+				<div class="medium-12 large-12 columns ">
+					<%- if params[:controller] != "devise/sessions" %>
+						<%- if notice  %>
+						  <p id="notice"><%= notice %></p>
+						<%- end %>
+						<%- if alert  %>
+							<p id="alert"><%= alert %></p>
+						<%- end %>
+					<%- end %>
+				</div>
+			</div>
+
+			<%= yield %>
+
+
+			<div class="clear"></div>
+		</div>
+		<div id="footer">
+			 <%= "Copyright©  #{Time.now.year} Ecua-American"%> 
+		</div>
+
+
+	</body>
+</html>

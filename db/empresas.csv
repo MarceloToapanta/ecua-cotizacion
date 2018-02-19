@@ -1,0 +1,31 @@
+name,ruc,direcction,sector,contact_name,contact_email,doctor_name,doctor_email,billing_name,billing_email,user_id
+Petroecuador,1000000000001,Alonso Mercadillo OE2-06 y Av. 10 de Agosto,industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,3
+Corporación Favorita,1000000000002,Calle de las Hiedras N47-111 y LIzarzaburo,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,4
+Conecel,1000000000003,"Av. Andrés Coremo E14-73 y Eloy Alfaro,",industrial,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,5
+Corporación Nacional de Electricidad,1000000000004,"Urb. 6 de Junio 2da. etapa, casa 3 lote 2, ",industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,6
+Corporación El Rosado,1000000000005,Av.Prensa N69-66 y David Ledesma,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,4
+General Motors del Ecuador,1000000000006,Av. Rodrigo de Chávez 2786 y Galte (VILLAFLORA),industrial,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,8
+Pronaca,1000000000007,"Av. Plaza Danhin, Cdla. La FAE Mz 20 Solar 12 (una cuadra diagonal al Bolocentro)",industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,9
+Dinadec,1000000000008,Argentinos 16 28 y Alvarado,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,8
+Corporación Nacional de Telecomunicaciones,1000000000009,Br. Aeropuerto N.-1 Vía Muyuna casa 663,industrial,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,5
+Omnibus,1000000000010,Alonso Mercadillo OE2-06 y Av. 10 de Agosto,industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,20
+Banco del Pichincha,1000000000011,Calle de las Hiedras N47-111 y LIzarzaburo,financiero,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,12
+Escuela Politecnica Nacional,1000000000012,"Av. Andrés Coremo E14-73 y Eloy Alfaro,",educacion,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,16
+Mutualista Pichincha,1000000000013,"Urb. 6 de Junio 2da. etapa, casa 3 lote 2, ",financiero,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,13
+Novacero,1000000000014,Av.Prensa N69-66 y David Ledesma,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,5
+Seguros Equinoccial,1000000000015,Av. Rodrigo de Chávez 2786 y Galte (VILLAFLORA),financiero,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,4
+Banco Internacional,1000000000016,"Av. Plaza Danhin, Cdla. La FAE Mz 20 Solar 12 (una cuadra diagonal al Bolocentro)",financiero,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,9
+Universidad Central del Ecuador,1000000000017,Argentinos 16 28 y Alvarado,educacion,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,7
+Banco Bolivariano,1000000000018,Br. Aeropuerto N.-1 Vía Muyuna casa 663,financiero,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,15
+DirecTV Ecuador,1000000000019,Alonso Mercadillo OE2-06 y Av. 10 de Agosto,industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,16
+Universidad Israel,1000000000020,Calle de las Hiedras N47-111 y LIzarzaburo,educacion,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,20
+Marcimex,1000000000021,"Av. Andrés Coremo E14-73 y Eloy Alfaro,",industrial,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,19
+Seguros Sucre,1000000000022,"Urb. 6 de Junio 2da. etapa, casa 3 lote 2, ",financiero,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,11
+Automotores Continental,1000000000023,Av.Prensa N69-66 y David Ledesma,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,7
+Banco del Austro,1000000000024,Av. Rodrigo de Chávez 2786 y Galte (VILLAFLORA),financiero,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,3
+Productos Avon,1000000000025,"Av. Plaza Danhin, Cdla. La FAE Mz 20 Solar 12 (una cuadra diagonal al Bolocentro)",industrial,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,9
+Importadora Tomebamba,1000000000026,Argentinos 16 28 y Alvarado,industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,7
+Creditos Economicos,1000000000027,Br. Aeropuerto N.-1 Vía Muyuna casa 663,industrial,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,14
+Banco Guayaquil,1000000000028,Av.Prensa N69-66 y David Ledesma,financiero,Marcelo Toapanta,mtoapanta@hotmial.com,,,,,17
+Leterago del Ecuador,1000000000029,Av. Rodrigo de Chávez 2786 y Galte (VILLAFLORA),industrial,,,Marcelo Toapanta,mtoapanta@hotmial.com,,,18
+Diners Club del Ecaudor,1000000000030,"Urb. 6 de Junio 2da. etapa, casa 3 lote 2, ",financiero,,,,,Marcelo Toapanta,mtoapanta@hotmial.com,10

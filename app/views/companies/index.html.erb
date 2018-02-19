@@ -1,0 +1,65 @@
+<%- content_for :title, 'Todas tus empresas' %>
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block table">
+      <div class="title-block">
+        <h3>Lista de empresas</h3>
+        <div class="right-section">
+          <a href=<%= new_company_path %> class="small success button">Nueva empresa</a>      
+        </div>
+      </div>
+      <div class="content-block">
+        <table class="responsive">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th class="date">Creado en</th>
+              <th>Ruc</th>
+              <th>Sector</th>
+              <th>Nombre contacto</th>
+              <th>Email contacto</th>
+              <th class="actions">Acciones</th>
+              <th class="actions">Cotizaciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @companies.each do |company| %>
+              <tr>
+                <td><%= link_to company.name, company %></td>
+                <td><%= company.created_at.strftime(@date_format) %></td>
+                <td><%= company.ruc %></td>
+                <td><%= company.sector_fullname %></td>
+                <td><%= company.contact_name %></td>
+                <td><%= company.contact_email %></td>
+                <td>
+                  <%= link_to 'Editar', edit_company_path(company), :class => "tiny button" %>
+                  <%-if  current_user.rol > 1 %>
+                    <%= link_to 'Eliminar', company, method: :delete, data: { confirm: 'Esta seguro?' }, :class => "destroy tiny button" %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to 'Nueva', new_company_quotation_path(company.id), :class => company.enabled_for_new_quotation? ? "tiny button" : "tiny button disabled" %>
+                  <%= link_to 'Histórico', company_quotations_path(company.id, :history => true), :class => "tiny button" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="8">
+                <span class="total">
+                  <%= @companies.count > 0 ? "Total : #{@companies.count}" : "Sin resultados" %>  
+                </span>
+                <%= paginate @companies %>  
+              </td>
+            </tr>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>

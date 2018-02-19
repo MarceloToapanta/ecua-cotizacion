@@ -1,0 +1,65 @@
+<%- content_for :title, 'Lista de exámenes'%>
+
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block table">
+      <div class="title-block">
+        <h3>Lista de exámenes</h3>
+        <div class="right-section">      
+          <%= link_to 'Nuevo Exámen', new_exam_path, :class => "small success button" %>
+        </div>
+      </div>
+      <div class="content-block">
+        <table class="responsive">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th class="date">Creado en</th>
+              <th>Activado</th>
+              <th width="75">V. Ciudad</th>
+              <th width="90">V. Provincia</th>
+              <th width="90">V. Uni Mobil</th>
+              <% if Exam.can_edit(current_user) %>
+                <th class="actions">Acciones</th>
+              <% end %>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @exams.each do |exam| %>
+              <tr>
+                <td><%= exam.code %></td>
+                <td><%= link_to exam.name, exam  %></td>
+                <td><%= exam.created_at.strftime(@date_format) %></td>
+                <td><%= exam.activated ? "Si" : "No" %></td>
+                <td><%=  "$" + number_with_precision(exam.city_value, :precision => 2) || 0 %></td>
+                <td><%=  "$" + number_with_precision(exam.m_units_value, :precision => 2) || 0 %></td>
+                <td><%=  "$" + number_with_precision(exam.province_value, :precision => 2) || 0 %></td>
+                <% if Exam.can_edit(current_user) %>
+                  <td>
+                    <%= link_to 'Editar', edit_exam_path(exam), :class => "tiny button" %>
+                    <%= link_to 'Eliminar', exam, method: :delete, data: { confirm: 'Esta seguro?' }, :class => "tiny button destroy" %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="8">
+                <span class="total">
+                  <%= @exams.count > 0 ? "Total : #{@exams.count}" : "Sin resultados" %>  
+                </span>
+                <%= paginate @exams %>  
+              </td>
+            </tr>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

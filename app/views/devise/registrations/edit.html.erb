@@ -1,0 +1,97 @@
+<%- content_for :title, 'Editar Usuario' %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <fieldset class="row">
+
+    <% if resource.errors.any? %>
+      <div class="medium-12 large-12 columns">
+        <div id="error_explanation">
+          <div class="block">
+            <div class="title-block error">
+              <h3><%= "Atención!" %> </h2>
+            </div>
+            <div class="content-block">
+              <ul class="list-error">
+              <% resource.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="medium-12 large-12 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Editar Usuario</h3>
+        </div>
+        
+        
+        <div class="content-block">
+
+          <div class="field form-group">
+            <%= f.label :name, "Nombre", :class => 'col-lg-2 control-label required' %><br />
+            <div class="col-lg-10">
+              <%= f.text_field :name, autofocus: true %>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= f.label :email, "E-mail", :class => 'col-lg-2 control-label required' %><br />
+            <div class="col-lg-10">
+              <%= f.email_field :email, autofocus: true, :oninvalid => "this.setCustomValidity('Por favor introduzca una dirección de correo eléctronico válida')", :oninput => "setCustomValidity('')" %>
+            </div>
+          </div>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Esperando confirmación de: <%= resource.unconfirmed_email %></div>
+          <% end %>
+
+          <div class="field form-group">
+            <%= f.label :current_password, "Clave actual", :class => 'col-lg-2 control-label required' %> <i>(Necesitamos tu calve actual para confirmar tus cambios)</i><br />
+            <div class="col-lg-10">
+              <%= f.password_field :current_password, autocomplete: "off" %>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= f.label :password, "Clave nueva", :class => 'col-lg-2 control-label' %> <i>(Dejar en blanco si no quieres que cambiar esto)</i><br />
+            <div class="col-lg-10">
+              <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= f.label :password_confirmation, "Confirmar clave", :class => 'col-lg-2 control-label' %><br />
+            <div class="col-lg-10">
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+          </div>
+
+
+          <div class="actions">
+            <%= f.submit "Guardar",:class => "from-button success button", data: { disable_with: "Por favor espera..." } %>
+          </div>
+        </div>
+        
+        
+      </div>
+    </div>
+
+    <%- if false %>
+      <div class="medium-12 large-12 columns">
+        <div class="block">
+          <div class="title-block">
+            <h3>Cancelar mi cuenta</h3>
+          </div>
+          <div class="content-block">
+            <p>Deseas cancelar tu cuenta? <%= button_to "Cancelar", registration_path(resource_name), data: { confirm: "Esta Seguro?" },:class => "from-button button", method: :delete %></p>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </fieldset>
+<% end %>

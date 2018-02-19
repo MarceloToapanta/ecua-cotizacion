@@ -1,0 +1,133 @@
+<%= form_for(@company, html: { class: 'form-horizontal'})  do |f| %>
+  <fieldset class="row">
+    <% if @company.errors.any? %>
+      <div class="medium-12 large-12 columns">
+        <div id="error_explanation">
+          <div class="block">
+            <div class="title-block error">
+              <h3><%= "Atención!" %> </h2>
+            </div>
+            <div class="content-block">
+              <ul class="list-error">
+              <% @company.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="medium-12 large-6 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Información de empresa</h3>
+        </div>
+        
+        <div class="content-block">
+          <legend>Datos empresa</legend>
+          <div class="field form-group">
+            <%= f.label :name, "Nombre", :class => 'col-lg-2 control-label required' %>
+            <div class="col-lg-10">
+              <% if @company.created_at.present? && current_user.rol < 3%>
+                <%= f.label @company.name, :class => 'form-control disabled-from' %>
+              <% else %>
+                <%= f.text_field :name, :class => 'form-control' %>
+              <% end %>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :ruc , "Ruc", :class => 'col-lg-2 control-label required' %>
+            <div class="col-lg-10">
+              <% if @company.created_at.present? && current_user.rol < 3 %>
+                <%= f.label @company.ruc, :class => 'form-control disabled-from' %>
+              <% else %>
+                <%= f.text_field :ruc, :class => 'form-control' %>
+              <% end %>
+              
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :direcction , "Direccion", :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.text_area :direcction, :class => 'form-control', rows: "5" %>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :description , "Descripcion", :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.text_area :description, :class => 'form-control', rows: "5" %>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :sector , "Sector", :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= select_tag "[company]sector", options_for_select(@sectors, @company.sector), :class => 'form-control', :include_blank => 'Selecionar un sector'%>
+            </div>        
+          </div>
+
+          <div class="button-actions">
+            <%= f.submit "Guardar", :class => "success button from-button", data: { disable_with: "Por favor espera..." } %>
+            <%= link_to 'Lista de Empresas', companies_path, :class => "button from-button" %>    
+          </div>
+          
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="medium-12 large-6 columns">
+
+      <div class="block">
+        <div class="title-block">
+          <h3>Información de contacto</h3>
+        </div>
+
+        <div class="content-block">
+          <legend>Contacto empresa</legend>
+          <div class="field form-group">
+            <%= f.label :contact_name, "Nombre" , :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.text_field :contact_name, :class => 'form-control' %>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :contact_email, "E-mail" , :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.email_field :contact_email, :class => 'form-control', :oninvalid => "this.setCustomValidity('Por favor introduzca una dirección de correo eléctronico válida')", :oninput => "setCustomValidity('')" %>
+            </div>
+          </div>
+          <legend>Doctor empresa</legend>
+          <div class="field form-group">
+            <%= f.label :doctor_name , "Nombre", :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.text_field :doctor_name , :class => 'form-control'%>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :doctor_email, "E-mail" , :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.email_field :doctor_email, :class => 'form-control', :oninvalid => "this.setCustomValidity('Por favor introduzca una dirección de correo eléctronico válida')", :oninput => "setCustomValidity('')" %>
+            </div>
+          </div>
+          <legend>Responsable de facturación empresa</legend>
+          <div class="field form-group">
+            <%= f.label :billing_name, "Nombre" , :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.text_field :billing_name, :class => 'form-control' %>
+            </div>
+          </div>
+          <div class="field form-group">
+            <%= f.label :billing_email, "E-mail" , :class => 'col-lg-2 control-label' %>
+            <div class="col-lg-10">
+              <%= f.email_field :billing_email, :class => 'form-control', :oninvalid => "this.setCustomValidity('Por favor introduzca una dirección de correo eléctronico válida')", :oninput => "setCustomValidity('')" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
+<% end %>
+

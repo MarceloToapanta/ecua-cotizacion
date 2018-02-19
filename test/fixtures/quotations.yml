@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-10-23 10:20:48
+  description: MyString
+  user_appoved_id: 
+  date_approved: 2015-10-23 10:20:48
+  approved: false
+  published: false
+
+two:
+  date: 2015-10-23 10:20:48
+  description: MyString
+  user_appoved_id: 
+  date_approved: 2015-10-23 10:20:48
+  approved: false
+  published: false

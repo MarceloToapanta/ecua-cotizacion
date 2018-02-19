@@ -1,0 +1,80 @@
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block">
+      <div class="title-block">
+        <h3>Informacion de empresa</h3>
+      </div>
+      
+      <div class="content-block">
+				<p>
+				  <strong>Código:</strong>
+				  <%= @exam.code %>
+				</p>
+
+				<p>
+				  <strong>Nombre:</strong>
+				  <%= @exam.name %>
+				</p>
+
+				<p>
+				  <strong>Valor unitario por Ciudad:</strong>
+				  <%= "$" + number_with_precision( @exam.city_value, :precision => 2) || 0 %>
+				</p>
+
+				<p>
+				  <strong>Valor unitario por Provicia:</strong>
+				  <%= "$" + number_with_precision(@exam.province_value, :precision => 2) || 0 %>
+				</p>
+
+				<p>
+				  <strong>Valor unitario por Unidades móviles:</strong>
+				  <%= "$" + number_with_precision(@exam.m_units_value, :precision => 2) || 0 %>
+				</p>
+
+				<p>
+				  <strong>Activado?:</strong>
+				  <%= @exam.activated ? "Si" : "No"%>
+				</p>
+				<div class="button-actions">
+					<% if Exam.can_edit(current_user) %>
+						<%= link_to 'Editar', edit_exam_path(@exam),:class => "from-button success button" %> 
+					<% end %>
+					<%= link_to 'Lista de exámenes', exams_path,:class => "from-button button" %>					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%if @exam.exam_updates.any? %>
+		<div class="medium-12 large-12 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Historial: cambios de valores</h3>
+        </div>
+        
+        <div class="content-block">
+
+          <% @exam.exam_updates.each do |update| %>
+            <div class="row">
+              <div class="large-12 columns">
+                <i><strong>Fecha de cambio: </strong> <%= update.date_modification.strftime(@date_time_format) %> </i>
+              </div>
+              <div class="large-12 columns">
+                <i><strong>Nro circular: </strong> <%= update.authorization %> </i>
+              </div>
+              <div class="large-12 columns">
+                <i><strong>Descripción: </strong> <%= update.description %> </i>
+              </div>
+            </div>
+            <% if @exam.exam_updates.count > 1%>
+              <hr/>
+            <% end%>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+

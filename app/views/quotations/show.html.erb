@@ -1,0 +1,105 @@
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block">
+      <div class="title-block">
+        <h3>Informacion de cotización</h3>
+      </div>
+      
+      <div class="content-block">
+        <p>
+          <strong>Descripción:</strong>
+          <%= @quotation.description %>
+        </p>
+
+        <p>
+          <strong>Creado en:</strong>
+          <%= @quotation.date.strftime(@date_format) %>
+        </p>
+
+        <p>
+          <strong>Creado por:</strong>
+          <%= @quotation.company.user.name %>
+        </p>
+
+
+        <p>
+          <strong>Vigencia:</strong>
+          <%= @quotation.validity.present? ? @quotation.validity.strftime(@date_format) : 'No definido' %>
+        </p>
+
+        <p>
+          <strong>Número de pacientes:</strong>
+          <%= @quotation.total_users %>
+        </p>
+
+        <p>
+          <strong>Etapa:</strong>
+          <%= @quotation.approved ? "Aprobada" : @quotation.rejected ? "Rechazada" : "Pendiente" %>
+        </p>
+
+        <p>
+          <strong>Aprobador por:</strong>
+          <%= User.get_name_by_id(@quotation.user_appoved_id) if @quotation.user_appoved_id %>
+        </p>
+
+        <p>
+          <strong>Fecha de aprobación:</strong>
+          <%= @quotation.date_approved.strftime(@date_format) if @quotation.date_approved%>
+        </p>
+
+        <hr>
+        <p>
+          <strong>Resumen totales</strong>
+        </p>
+
+        <p>
+          <strong>Subtotal por ciudad:</strong>
+          <%= "$" + number_with_precision(@quotation.city_total, :precision => 2) || 0  %>
+        </p>
+
+        <p>
+          <strong>Subtotal por provincia:</strong>
+          <%= "$" + number_with_precision(@quotation.province_total, :precision => 2) || 0  %>
+        </p>
+
+        <p>
+          <strong>Subtotal por unidad movil:</strong>
+          <%= "$" + number_with_precision(@quotation.m_units_total, :precision => 2) || 0  %>
+        </p>
+
+        
+
+        <p>
+          <strong>TOTAL</strong>
+          <%= "$" + number_with_precision(@quotation.total, :precision => 2) || 0  %>
+        </p>
+        
+
+      <!--   <p>
+          <strong>Published:</strong>
+          <%= @quotation.published %>
+        </p>
+       -->
+        <hr>
+        <p>
+          <strong>Lista de exámenes</strong>
+        </p>
+        <% if @quotation.quotation_items.any? %>
+          <ul>
+            <% @quotation.quotation_items.each do |quotation_item| %>
+              <li> <%= quotation_item.exam.name if quotation_item.exam.present? %> </li>
+            <% end %>    
+          </ul>
+        <% else %>
+          <p>No se encontraron exámenes</p>
+        <% end %>
+        <div class="button-actions">
+          <% if current_user.rol > 1 %>
+            <%= link_to 'Editar',  @company.present? ? edit_company_quotation_path(@company.id,@quotation) : edit_quotation_path(@quotation), :class => "small success button" %>
+          <% end %>
+          <%= link_to 'Lista de cotizaciones', @company.present? ? company_quotations_path(@company.id) : quotations_path, :class => "small button" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

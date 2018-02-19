@@ -1,0 +1,129 @@
+<%- if @company.present? %>
+  <%- content_for :title, 'Buscar cotizaciones para: ' + @company.name %>
+<%- else %>
+  <%- content_for :title, 'Buscar cotizaciones'%>
+<%- end %>
+
+
+
+<div class="box row">
+  <div class="medium-12 large-12 columns">
+    <div class="block table">
+      <div class="title-block">
+        <h3>Lista de cotizaciones</h3>
+        <div class="right-section">
+          <%- if @company.present? %>
+            <%- if @company.user_id == current_user.id %>
+              <%= link_to 'Nueva Cotización', new_company_quotation_path, :class => "small success button" %>
+            <%- end %>
+          <% end %>
+          <%= link_to 'Lista de empresas', companies_path, :class => "small button" %>
+        </div>
+      </div>
+      <div class="content-block">
+
+        <div class="control-group row">
+          <div class="medium-3 large-2 columns">
+            <label class="label_search">Buscar por:</label>
+            
+          </div>
+          <div class="medium-9 large-10 columns">
+            <form action="<%= search_quotations_path %>" method="post" class="navbar-search pull-right">
+              <input type="text" name="q" class="search-query typeahead" placeholder="Buscar Cotizaciones" value="<%= params[:q]%>">
+            </form>
+          </div>
+        </div>
+        
+        <table class="responsive">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Empresa</th>
+              <th>Creado por</th>
+              <th class="date">Creado en</th>
+              <th>Total</th>
+              <th>Aprobado?</th>
+              <th class="date">Aprobado en</th>
+              <!-- <th>Publicado</th> -->
+              <th>Aprobador Por</th>
+              <!-- <th>PDF</th> -->
+              <th class="actions">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @quotations.each do |quotation| %>
+              <%- class_row = "active"%>
+              <%- class_row << " success" if quotation.approved %>
+              <%- class_row << " warning" if !quotation.approved %>
+              <tr class= "<%= class_row%>" >
+                <td>
+                  <%= link_to quotation.description, @company.present? ? company_quotation_path(@company,quotation) : quotation_path(quotation) %>
+                  <%=  %>
+                </td>
+                <td><%= quotation.company.name if quotation.company %></td>
+                <td><%= quotation.company.user.name if quotation.company && quotation.company.user %></td>
+                <td><%= quotation.created_at.strftime(@date_format) %></td>
+                <td><%= "$" + number_with_precision(quotation.total, :precision => 2) || 0  %></td>
+                <td><%= quotation.approved ? "Si" : "No" %></td>
+                <td><%= quotation.date_approved.strftime(@date_format) if quotation.date_approved %></td>
+                <td><%= User.find(quotation.user_appoved_id).name if quotation.user_appoved_id  %></td>
+                
+                <!-- 
+                <%- if quotation.pdf.url %>
+                  <td><%= link_to "Abrir PDF",  quotation.pdf.url if quotation.pdf %></td>
+                <%- else%>
+                  <td>-----</td>
+                <%- end%> -->
+                <!-- <td><%= quotation.published %></td> -->
+
+
+                <%- if current_user.rol == 3 %>
+                  <td>
+                    <%= link_to 'Editar', @company.present? ? edit_company_quotation_path(@company.id,quotation) : edit_quotation_path(quotation), :class => "tiny button" %>
+                    <%= link_to 'Eliminar', "/quotations/" + quotation.id.to_s , method: :delete, data: { confirm: 'Esta seguro?' }, :class => "destroy tiny button" %>
+                  </td>
+                <%- else %>  
+                  <td>
+                    <%- if quotation.can_edit(current_user) %>
+                      <%= link_to 'Editar', @company.present? ? edit_company_quotation_path(@company.id,quotation) : edit_quotation_path(quotation), :class => "tiny button" %>
+                      <%= link_to 'Eliminar', "/quotations/" + quotation.id.to_s , method: :delete, data: { confirm: 'Esta seguro?' }, :class => "destroy tiny button" %>
+                    <%- else %>
+                      <%- if quotation.company.user.id != current_user.id %>
+                        <%= "No es posible editar" %>
+                      <%- elsif quotation.approved %>
+                        <%= "Cotización aprobada" %>
+                      <%- elsif quotation.rejected %>
+                        <%= "Cotización rechazada" %>
+                      <%- end%>
+                      
+                    <%- end %>
+                  </td>
+                <%- end %>
+
+                <%- if current_user.rol == 2 %>
+                  <td><%= link_to 'Editar',  @company.present? ? edit_company_quotation_path(@company.id,quotation) : edit_quotation_path(quotation) %></td>
+                <%- end %>
+
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+                
+            <td colspan="9">
+                <span class="total">
+                  <%= @quotations.count > 0 ? "Total : #{@quotations.count}" : "Sin resultados" %>  
+                </span>
+                <%= paginate @quotations %>    
+              </td>
+            </tr>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+  
+</div>

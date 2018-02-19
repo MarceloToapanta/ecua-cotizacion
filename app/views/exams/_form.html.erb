@@ -1,0 +1,171 @@
+<%= form_for(@exam) do |f| %>
+  <fieldset class="row">
+    <% if @exam.errors.any? %>
+      <div class="medium-12 large-12 columns">
+        <div id="error_explanation">
+          <div class="block">
+            <div class="title-block error">
+              <h3><%= "Atención!" %> </h2>
+            </div>
+            <div class="content-block">
+              <ul class="list-error">
+              <% @exam.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="medium-12 large-12 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Informacion de exámen</h3>
+        </div>
+        
+        <div class="content-block">
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :code, "Código", :class => 'col-lg-2 control-label required' %>
+            </div>
+            <div class="large-10 columns">
+              <%= f.text_field :code %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :name, "Nombre", :class => 'col-lg-2 control-label required' %>
+            </div>
+            <div class="large-10 columns">
+              <%= f.text_field :name %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :activated, "Activado?", :class => 'col-lg-2 control-label' %>
+            </div>              
+            <div class="large-10 columns">
+              <%= f.check_box :activated %>
+            </div>
+          </div>
+
+
+
+
+          <% if params[:action] == "edit" %>
+            <hr/>
+            <div class="row">
+              <div class="large-12 columns" style="margin-bottom: 20px;">
+                <i>Si desea modificar los valores del examen ingresar el numero de la circular que autoriza los cambios</i>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns" style="margin-bottom: 0px;">
+                
+              </div>
+
+              <div class="large-2 columns">
+                <%= label_tag "change", "Cambiar valores", {:class => 'col-lg-2 control-label'} %>
+              </div>
+
+              <div class="large-1 columns">
+                <%= radio_button_tag 'change', 'yes' %> Si
+              </div>
+              <div class="large-1 columns">
+                <%= radio_button_tag 'change', 'no', :checked => "checked" %> No
+              </div>
+
+              <div class="large-8 columns">
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="large-2 columns">
+                <%= label_tag "num_circular_label", "Nro. circular", {:class => 'col-lg-2 control-label'} %>
+              </div>              
+              <div class="large-5 columns">
+                <%= number_field_tag "authorization_num",nil , {:step => 1, :disabled => "disabled"} %>
+              </div>
+              <div class="large-5 columns"></div>
+            </div>
+          <% end %>
+
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :city_value, "Valor unitario por Ciudad", :class => 'col-lg-2 control-label' %>
+            </div>
+            <div class="large-5 columns">
+              <%= f.number_field :city_value, :step => 0.01, :oninvalid => "this.setCustomValidity('Por favor introduzca un número valiado, ejemplo: 10.50')", :oninput => "setCustomValidity('')" , :disabled => "disabled" %>
+            </div>
+            <div class="large-5 columns"></div>
+          </div>
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :province_value, "Valor unitario por Provicia", :class => 'col-lg-2 control-label' %>
+            </div>
+            <div class="large-5 columns">
+              <%= f.number_field :province_value, :step => 0.01, :oninvalid => "this.setCustomValidity('Por favor introduzca un número valiado, ejemplo: 10.50')", :oninput => "setCustomValidity('')", :disabled => "disabled" %>
+            </div>
+            <div class="large-5 columns"></div>
+          </div>
+
+          <div class="row">
+            <div class="large-2 columns">
+              <%= f.label :m_units_value, "Valor unitario por Unidades móviles", :class => 'col-lg-2 control-label' %>
+            </div>              
+            <div class="large-5 columns">
+              <%= f.number_field :m_units_value, :step => 0.01, :oninvalid => "this.setCustomValidity('Por favor introduzca un número valiado, ejemplo: 10.50')", :oninput => "setCustomValidity('')" , :disabled => "disabled"%>
+            </div>
+            <div class="large-5 columns"></div>
+          </div>
+
+
+
+          <div class="actions">
+            <%= f.submit "Guardar", :class => "success button from-button", data: { disable_with: "Por favor espera..." } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <% if params[:action] == "edit" && @exam.exam_updates.any? %>
+      <div class="medium-12 large-12 columns">
+        <div class="block">
+          <div class="title-block">
+            <h3>Historial: cambios de valores</h3>
+          </div>
+          
+          <div class="content-block">
+
+            <% @exam.exam_updates.each do |update| %>
+              <div class="row">
+                <div class="large-12 columns">
+                  <i><strong>Fecha de cambio: </strong> <%= update.date_modification.strftime(@date_time_format) %> </i>
+                </div>
+                <div class="large-12 columns">
+                  <i><strong>Nro circular: </strong> <%= update.authorization %> </i>
+                </div>
+                <div class="large-12 columns">
+                  <i><strong>Descripción: </strong> <%= update.description %> </i>
+                </div>
+              </div>
+              <% if @exam.exam_updates.count > 1%>
+                <hr/>
+              <% end%>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+<% end %>

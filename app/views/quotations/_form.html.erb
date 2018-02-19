@@ -1,0 +1,266 @@
+<%- url =  (params[:action] == "new") ? '/companies/' + @company.id.to_s + '/quotations' : '/companies/' + @company.id.to_s + '/quotations/' + @quotation.id.to_s  %>
+<%= form_for(@quotation,url: url, method: (params[:action] == "new" || params[:action] == "create") ? :post : :put, html: { class: 'form-horizontal', :multipart => true}) do |f| %>
+  
+
+
+  
+   <fieldset class="row">
+    <% if @quotation.errors.any? %>
+      <div class="medium-12 large-12 columns">
+        <div id="error_explanation">
+          <div class="block">
+            <div class="title-block error">
+              <h3><%= "Atención!" %> </h2>
+            </div>
+            <div class="content-block">
+              <ul class="list-error">
+              <% @quotation.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="medium-12 large-6 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Datos de la cotización</h3>
+        </div>
+        
+        <div class="content-block">
+
+          <div class="quotation-info">
+            <div class="row title">
+              <div class="large-12 columns">
+                <div class="border-bottom">Datos de la cotización</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-3 columns">
+                <%= f.label :description, "Descripcion", :class => 'col-lg-2 control-label required' %>
+              </div>
+              <div class="large-9 columns">
+                <%= f.text_area :description, :class => 'form-control' %>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="large-3 columns">
+                <%= f.label :pdf, "Archivo PDF", :class => 'col-lg-2 control-label' %>
+              </div>
+              <div class="large-9 columns">
+                <%= f.file_field :pdf, :class => 'form-control', :accept => "application/pdf" %>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="large-3 columns">
+                <%= f.label :validity, "Vigencia", :class => 'col-lg-2 control-label' %>
+              </div>
+              <div class="large-9 columns">
+                <%= f.date_field :validity, :class => 'form-control1' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-3 columns">
+                <%= f.label :total_users, "Número de pacientes", :class => 'col-lg-2 control-label' %>
+              </div>
+              <div class="large-9 columns">
+                <%= f.number_field :total_users, :class => 'form-control1' %>
+              </div>
+            </div>
+
+            
+
+            <%- if current_user.rol > 1 %>
+              <div class="row">
+                <div class="large-3 columns">
+                  <%= f.label :approved, "Etapa", :class => 'col-lg-2 control-label' %>
+                </div>
+                <div class="large-9 columns">
+                  <%= f.radio_button :approved, "approved", :checked => @quotation.approved ? "checked" : "false", :class => 'form-control' %>
+                  <%= f.label :approved, "Aprobado", :value => "approved"%>
+                  </br>
+                  <%= f.radio_button :approved, "rejected", :checked => @quotation.rejected ? "checked" : "false", :class => 'form-control' %>
+                  <%= f.label :approved, "Rechazado", :value => "rejected"%>
+                  </br>
+                  <%= f.radio_button :approved, "pending",:checked => (!@quotation.approved && !@quotation.rejected) ? "checked" : "false", :class => 'form-control' %>
+                  <%= f.label :approved, "Pendiente", :value => "pending"%>
+                </div>
+              </div>
+            <%- end %>
+
+            <div class="row title-midle">
+              <div class="large-12 columns">
+                <div class="border-bottom required">Exámenes de laboratorio</div>
+                
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns">
+                <%= f.fields_for :quotation_items do |quotation_item| %>
+                  <%= render 'quotation_item_fields', f: quotation_item %>
+                <% end %>
+                <div class="links">
+                  <%= link_to_add_association "Añadir examen", f, :quotation_items, :class =>"tiny button" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="button-actions">            
+              <%= f.submit "Guardar", :class =>"from-button success button", data: { confirm: 'Esta seguro de enviar los datos de la cotización?', disable_with: "Por favor espera..." } %>
+              <%= link_to 'Regresar', company_quotations_path(@company.id),:class => "from-button button" %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="medium-12 large-6 columns">
+      <div class="block">
+        <div class="title-block">
+          <h3>Datos de la empresa</h3>
+        </div>
+        
+        <div class="content-block">
+
+          <div class="company-info">
+            <div class="row title">
+              <div class="large-12 columns"><div class="border-bottom">Datos de la empresa</div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Nombre Empresa</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.name %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Empresa Nueva</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.quotations.any? ? "No" : "Si" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Nombre Contacto</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.contact_name %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Email Contacto</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.contact_email %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Sector</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.sector %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-3 columns">
+                <label>Direccion</label>
+              </div>
+              <div class="large-9 columns">
+                <%= @company.direcction %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="title-block">
+          <h3>Total cotización</h3>
+        </div>
+        <div class="content-block">
+
+          <div class="company-info">
+            <div class="row title">
+              <div class="large-12 columns">
+                
+                <div class="border-bottom">Resumen totales</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns">
+                <i>Si desea applicar el valor por <strong>Provincia</strong> y/o por <strong>Unidades Mobiles</strong>, activar el cuadro a lado del subtotal de cada uno</i>
+              </div>
+
+            </div>
+            <br>
+            <div class="row">
+              <div class="large-6 columns">
+                <label>Subtotal por ciudad</label>
+              </div>
+              <div class="large-3 columns">
+                <%= f.text_field :city_total, :readonly => true %>
+              </div>
+              <div class="large-4 columns">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-6 columns">
+                <label>Subtotal por provincia</label>
+              </div>
+              <div class="large-3 columns">
+                <%= f.text_field :province_total, :readonly => true %>
+              </div>
+              <div class="large-3 columns" style="padding: 6px 0px;">
+                <%= f.check_box :provinces %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-6 columns">
+                <label>Subtotal por unidad movil</label>
+              </div>
+              <div class="large-3 columns">
+                <%= f.text_field :m_units_total, :readonly => true %>
+              </div>
+              <div class="large-3 columns" style="padding: 6px 0px;">
+                <%= f.check_box :mobile_units, :class => 'form-control' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-6 columns">
+                <label>TOTAL</label>
+              </div>
+              <div class="large-3 columns">
+                <%= text_field_tag 'total','', :readonly => true %>
+              </div>
+              <div class="large-3 columns">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+<% end %>
