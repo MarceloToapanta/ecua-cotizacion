@@ -36,6 +36,8 @@ class HomeController < ApplicationController
     @rec_quotations = @quotations.reject
     @rec_months = get_last_months(@rec_quotations, num_months)
 
+    @users = User.all
+
     # User
     # @u_months = []
     # users = User.all.where(:rol => 1)
@@ -50,12 +52,12 @@ class HomeController < ApplicationController
     # Clear database
     Rails.application.eager_load!
     ActiveRecord::Base.descendants.each { |c| c.delete_all unless c == ActiveRecord::SchemaMigration  }
-    ActiveRecord::Base.connection.reset_pk_sequence!("users")
-    ActiveRecord::Base.connection.reset_pk_sequence!("companies")
-    ActiveRecord::Base.connection.reset_pk_sequence!("quotations")
-    ActiveRecord::Base.connection.reset_pk_sequence!("quotation_items")
-    ActiveRecord::Base.connection.reset_pk_sequence!("exams")
-    ActiveRecord::Base.connection.reset_pk_sequence!("exam_updates")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("users")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("companies")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("quotations")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("quotation_items")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("exams")
+    # ActiveRecord::Base.connection.reset_pk_sequence!("exam_updates")
     # Add users
     datafile = Rails.root + 'db/usuarios.csv'
     CSV.foreach(datafile, headers: true) do |row|
@@ -109,24 +111,24 @@ class HomeController < ApplicationController
     end
 
     # Add Quotarions
-    datafile = Rails.root + 'db/quotations.csv'
-    CSV.foreach(datafile, headers: true) do |row|
+    # datafile = Rails.root + 'db/quotations.csv'
+    # CSV.foreach(datafile, headers: true) do |row|
 
-      q = Quotation.new
-      q.description = row[1]
-      q.exam_number = 1
-      q.city_total = row[3].present? ? row[3].to_d : 0
-      q.province_total = row[4].present? ? row[4].to_d : 0
-      q.m_units_total = row[5].present? ? row[5].to_d : 0
-      q.company_id = 1
-      q.total_users = 1
-      q.approved = rand(0..1) == 1 ? true : false
-      q.rejected = rand(0..1) == 1 ? true : false
-      q.created_at = rand((Time.now.to_date - 6.months)..Time.now.to_date)
+    #   q = Quotation.new
+    #   q.description = row[1]
+    #   q.exam_number = 1
+    #   q.city_total = row[3].present? ? row[3].to_d : 0
+    #   q.province_total = row[4].present? ? row[4].to_d : 0
+    #   q.m_units_total = row[5].present? ? row[5].to_d : 0
+    #   q.company_id = 1
+    #   q.total_users = 1
+    #   q.approved = rand(0..1) == 1 ? true : false
+    #   q.rejected = rand(0..1) == 1 ? true : false
+    #   q.created_at = rand((Time.now.to_date - 6.months)..Time.now.to_date)
       
-      Rails.logger.info "=====save ====> #{q.save}"
-      Rails.logger.info "=====errors ====> #{q.errors.full_messages}"
-    end
+    #   Rails.logger.info "=====save ====> #{q.save}"
+    #   Rails.logger.info "=====errors ====> #{q.errors.full_messages}"
+    # end
 
     redirect_to root_path, alert: "Base de datos cargada"
 

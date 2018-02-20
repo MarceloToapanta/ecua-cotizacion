@@ -24,8 +24,8 @@ $block-border: 1px solid rgba(0,0,0,.12);
 $color-active: rgb(3,155,229);
 
 $color-block: #F2F6FA;
-$pending-text-color: #4F627B;
-$link-color: #337ab7;
+$pending-text-color: #88bbc8;
+$link-color: #00a4b9;
 $approved: #6CBC31;
 $pending: #EE7563;
 $rejected: #E4EAF3;
@@ -120,7 +120,7 @@ a{
 // Top Bar
 .top-bar{
   background-image: url(/images/header-bg.png);
-  background-color: #000;
+  background-color: #005a66;
   color: white;
   box-shadow: $box-shadow;
   padding: 3px 0px;
@@ -159,7 +159,7 @@ a{
   width: 1170px;
   .navbar-inner {
     background-image: url(/images/header-bg.png);
-    background-color: #000;
+    background-color: #005a66;
     padding-left: 0;
     padding-right: 0;
     border-radius: 4px 4px 0px 0px;
@@ -173,8 +173,8 @@ a{
       float: left;
       margin: 0 10px 0 0;
       &> li {
-        border-right: 1px solid #404040;
-        box-shadow: 1px 0 0 #212121;
+        // border-right: 1px solid #404040;
+        // box-shadow: 1px 0 0 #212121;
         float: left;
         list-style: none;
         &> a{
@@ -198,12 +198,13 @@ a{
         -webkit-transition: all .2s;
         -moz-transition: all .2s;
         transition: all .2s;
-        text-shadow: 0 1px 2px black;
+        text-shadow: 0 1px 0px black;
         font-weight: 700;
         font-size: 12px;
         &:hover{
-          color: $link-color;
-          box-shadow: inset 0 1px 5px rgba(0,0,0,8),0 1px 0 rgba(255,255,255,1);
+          // color: $link-color;
+          // box-shadow: inset 0 1px 5px rgba(0,0,0,8),0 1px 0 rgba(255,255,255,1);
+          color: #c7ffff;
         }
         &.dashboard{
           background-image: url(/images/dashboard.png);
@@ -218,7 +219,7 @@ a{
           background-image: url(/images/exam.png); 
         }
         &.active{
-          color: $link-color;
+          color: #c7ffff;
         }
       }
     }
@@ -227,18 +228,14 @@ a{
       .search-query {
         margin-top: 1px;
         padding: 4px 10px;
-        text-shadow: 0 1px 0 #000;
-        -webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,3.4),0 1px 0 rgba(255,255,255,0.1);
-        -moz-box-shadow: inset 0 1px 5px rgba(0,0,0,3.4),0 1px 0 rgba(255,255,255,0.1);
-        box-shadow: inset 0 1px 5px rgba(0,0,0,3.4),0 1px 0 rgba(255,255,255,0.1);
         outline: 0;
         border: 0;
         border-radius: 5px;
-        width: 150px;
-        color: #5d5d5d;
+        width: 300px;
+        color: #333;
         margin-top: 0;
         margin: 10px 20px 10px 0;
-        background-color: #000;
+        background-color: #fff;
         height: 28px;
         font-size: 1em;
       }
@@ -259,7 +256,7 @@ a{
       border-bottom: $block-border;
       // margin-bottom: 15px;
       background-image: url(/images/header-bg.png);
-      background-color: #000;
+      background-color: #005a66;
       border-radius: 5px 5px 0 0;
       display: flex;
       &.error{
@@ -272,9 +269,9 @@ a{
         }
       }
       h3{
-        font-size: 1em;
+        font-size: 14px;
         line-height: 18px;
-        font-weight: normal;
+        font-weight: bold;
         color: white;
         margin: 0;
         text-shadow: 0 1px 0 black;
@@ -616,7 +613,7 @@ table{
       background-image: -o-linear-gradient(bottom,rgba(0,0,0,0.05) 0,rgba(255,255,255,0.05) 100%);
       background-image: -webkit-linear-gradient(bottom,rgba(0,0,0,0.05) 0,rgba(255,255,255,0.05) 100%);
       background-image: linear-gradient(bottom,rgba(0,0,0,0.05) 0,rgba(255,255,255,0.05) 100%);
-      color: #949494;
+      color: #444;
       border-bottom: 1px solid #c2c2c2;
       -webkit-box-shadow: 0 2px 0 #fff;
       -moz-box-shadow: 0 2px 0 #fff;

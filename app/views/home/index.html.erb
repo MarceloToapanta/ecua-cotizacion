@@ -3,6 +3,53 @@
   <h4>Empresas Registradas</h4>
 </div> -->
 <div class="box">
+
+  <div class="row">
+    <div class="medium-12 large-12 columns">
+      <div class="block table">
+        <div class="title-block">
+          <h3>Cotizaciones por vendedor</h3>
+          <div class="right-section">
+            <a href=<%= new_company_path %> class="small success button">Nueva empresa</a>      
+          </div>
+        </div>
+        <div class="content-block">
+          <% if @users.any? %>
+            <table class="responsive">
+              <thead>
+                <tr>
+                  <th style="width: 40%">Nombre</th>
+                  <!-- <th style="width: 20%">Ruc</th> -->
+                  <th style="width: 40%">E-mail</th>
+                  <th style="width: 20%">Total corizaciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @users.map{|u| u}.sort_by{|e| -e.total_quotations}.each do |user| %>
+                  <tr>
+                    <td><%= link_to user.name, user  %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.total_quotations %></td>
+                    
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %> 
+            <div class="row" style="margin:20px">
+              <div class="medium-12 large-12 columns">
+                No se encontraron resultados
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
   <div class="row">
     <div class="medium-12 large-12 columns">
       <div class="block">
@@ -105,6 +152,7 @@
         </div>
       <% end %>
     </div>
+
     <div class="medium-12 large-6 columns">
       <div class="block table">
         <div class="title-block">

@@ -15,7 +15,7 @@ class Quotation < ActiveRecord::Base
 	
 
 
-	after_create :send_create_notification
+	# after_create :send_create_notification
 
 	def total
 		province_total = self.provinces ? self.province_total : 0
