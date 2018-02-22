@@ -53,5 +53,12 @@ class Quotation < ActiveRecord::Base
 			where(:rejected => true)
 		end
 
+		def by_week(num_week)
+			date = Date.today + (num_week.week)
+	    starts = date.at_beginning_of_week
+	    ends = date.at_end_of_week
+	    where(created_at: starts..ends)
+		end
+
 	end
 end

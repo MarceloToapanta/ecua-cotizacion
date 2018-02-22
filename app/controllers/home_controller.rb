@@ -36,7 +36,23 @@ class HomeController < ApplicationController
     @rec_quotations = @quotations.reject
     @rec_months = get_last_months(@rec_quotations, num_months)
 
+
+    # @quotations = Quotation.on_this_week
+    
+
+    @num_week = params[:week].to_i || 0
+
+    date = Date.today + (@num_week.week)
+    @starts = date.at_beginning_of_week
+    @ends = date.at_end_of_week
+
     @users = User.all
+
+    @users.map{|u| @total_approved = u.total_approved(@num_week)}
+    @users.map{|u| @total_pendig = u.total_pendig(@num_week)}
+    @users.map{|u| @total_reject = u.total_reject(@num_week)}
+  
+    @total = @total_approved + @total_pendig + @total_reject
 
     # User
     # @u_months = []

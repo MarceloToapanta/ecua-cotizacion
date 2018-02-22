@@ -28,7 +28,7 @@ $pending-text-color: #88bbc8;
 $link-color: #00a4b9;
 $approved: #6CBC31;
 $pending: #EE7563;
-$rejected: #E4EAF3;
+$rejected: #aaaaaa;
 
 $grey: #d8d8d8;
 $green: #5cb85c;
@@ -921,4 +921,53 @@ textarea {
 .label_search, .label_select{
   line-height: 30px;
   float: right;
+}
+.date-filter{
+  padding: 15px 20px;
+  border-bottom: 1px solid #ccc;
+  background: #f8f8f8;
+  font-size: 12px;
+  color: #444;
+  .current-date{
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .weeks{
+    padding: 0;
+    .prev{
+    text-align: center;
+    margin-right: 10px;
+    }
+    .next{
+      text-align: center;
+    }  
+  }
+  .data{
+    text-align: center;
+    font-weight: bolder;
+    &.aprobado{
+      color: $approved;
+    }
+    &.pendiente{
+      color: $pending;
+    }
+    &.rechazado{
+      color: $rejected;
+    }
+    &.total{
+      
+    }
+  }
+  .text-center{
+    text-align: center; 
+  }
+  a{
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: #eee;
+    &:hover{
+      background: #f8f8f8;
+    }
+  }
 }

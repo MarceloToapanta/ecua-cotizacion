@@ -15,14 +15,46 @@ class User < ActiveRecord::Base
 	  end
 	end
 
-  def total_quotations
+  def total_approved(num_week)
     total = 0
     if self.companies.any?
       self.companies.each do |company|
-        total = total + company.quotations.count
+        total = total + company.quotations.approved.by_week(num_week).count
       end
     end
     total
   end
+
+  def total_pendig(num_week)
+    total = 0
+    if self.companies.any?
+      self.companies.each do |company|
+        total = total + company.quotations.pendig.by_week(num_week).count
+      end
+    end
+    total
+  end
+
+  def total_reject(num_week)
+    total = 0
+    if self.companies.any?
+      self.companies.each do |company|
+        total = total + company.quotations.by_week(num_week).reject.count
+      end
+    end
+    total
+  end
+
+  def total(num_week)
+    total = 0
+    if self.companies.any?
+      self.companies.each do |company|
+        total = total + company.quotations.by_week(num_week).count
+      end
+    end
+    total
+  end
+
+
 
 end

@@ -9,31 +9,62 @@
       <div class="block table">
         <div class="title-block">
           <h3>Cotizaciones por vendedor</h3>
-          <div class="right-section">
+          <!-- <div class="right-section">
             <a href=<%= new_company_path %> class="small success button">Nueva empresa</a>      
-          </div>
+          </div> -->
         </div>
         <div class="content-block">
+          <div class="row date-filter">
+            <div class="current-date medium-3 large-3 small-6 columns ">
+              <%= "Fecha: #{@starts} - #{@ends}" %>
+            </div>
+            <div class="weeks medium-1 large-1 small-3 columns">
+              <a class="prev" href="<%= root_path(:week => @num_week - 1) %>"><</a>
+              <a class="next" href="<%= root_path(:week => @num_week + 1) %>">></a>
+            </div>
+            <!-- <div class="next medium-1 large-1 small-3 columns"></div> -->
+
+            
+            <div class="data aprobado medium-2 large-2 small-3 columns"><%= "Aprobado: #{@total_approved}" %></div>
+            <div class="data pendiente medium-2 large-2 small-3 columns"><%= "Pendiente: #{@total_pendig}" %></div>
+            <div class="data rechazado medium-2 large-2 small-3 columns"><%= "Rechazado: #{@total_reject}" %></div>
+            <div class="data total medium-2 large-2 small-3 columns"><%= "Total: #{@total}" %></div>
+          </div>
           <% if @users.any? %>
             <table class="responsive">
               <thead>
                 <tr>
-                  <th style="width: 40%">Nombre</th>
+                  <th style="width: 30%">Nombre</th>
                   <!-- <th style="width: 20%">Ruc</th> -->
-                  <th style="width: 40%">E-mail</th>
-                  <th style="width: 20%">Total corizaciones</th>
+                  <th style="width: 30%">E-mail</th>
+                  <th style="width: 10%" class="text-center">Aprobado</th>
+                  <th style="width: 10%" class="text-center">Pendiente</th>
+                  <th style="width: 10%" class="text-center">Rechazado</th>
+                  <th style="width: 10%" class="text-center">Total</th>
                 </tr>
               </thead>
 
               <tbody>
-                <% @users.map{|u| u}.sort_by{|e| -e.total_quotations}.each do |user| %>
+                <% if @total > 0 %>
+                  <% @users.map{|u| u}.sort_by{|e| -e.total(@num_week)}.each do |user| %>
+                    <% total_user = user.total(@num_week)%>
+                    <% if total_user > 0 %>
+                      <tr>
+                        <td><%= link_to user.name, user  %></td>
+                        <td><%= user.email %></td>
+                        <td class="text-center"><%= user.total_approved(@num_week) %></td>
+                        <td class="text-center"><%= user.total_pendig(@num_week) %></td>
+                        <td class="text-center"><%= total_user %></td>
+                        <td class="text-center"><%=  %></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% else %>
                   <tr>
-                    <td><%= link_to user.name, user  %></td>
-                    <td><%= user.email %></td>
-                    <td><%= user.total_quotations %></td>
-                    
+                    <td colspan="6" class="text-center">Sin resultados</td>
                   </tr>
                 <% end %>
+                
               </tbody>
             </table>
           <% else %> 
@@ -50,7 +81,7 @@
   </div>
 
 
-  <div class="row">
+  <div class="row hide">
     <div class="medium-12 large-12 columns">
       <div class="block">
         <div class="title-block">
